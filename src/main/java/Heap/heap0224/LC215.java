@@ -1,6 +1,9 @@
 package Heap.heap0224;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Random;
 
@@ -154,3 +157,175 @@ public class LC215 {
 //        return queue.peek();
 //    }
 }
+class LC215_M2{
+    public int findKthLargest(int[] nums, int k) throws Exception {
+        MinHeap pq = new MinHeap(nums.length);
+        for(int i=0; i<k; i++){
+            pq.offer(nums[i]);
+        }
+        for(int i=k; i<nums.length; i++){
+            if(nums[i]>pq.peek()){
+                pq.poll();
+                pq.offer(nums[i]);
+            }
+        }
+        return pq.peek();
+    }
+
+    @Test
+    public void test() throws Exception {
+        Random random = new Random();
+        int[] test = new int[20];
+        for(int i=0; i<20; i++){
+            test[i] = random.nextInt(1000);
+        }
+        int res = findKthLargest(test,5);
+        System.out.println(res);
+        heapSort(test);
+        System.out.println(Arrays.toString(test));
+
+    }
+
+    public void heapSort(int[] arr) throws Exception {
+        MinHeap heap = new MinHeap(arr);
+        for(int i=0; i<arr.length; i++){
+            arr[i] = (int) heap.poll();
+        }
+    }
+}
+
+//小顶堆
+class MinHeap{
+    private int[] data;
+    private int size;
+    private int maxSize;
+
+    public MinHeap(){
+
+    }
+    public MinHeap(int maxSize){
+        this.maxSize = maxSize*2;
+        this.size = 0;
+        this.data = new int[this.maxSize];
+    }
+
+    public MinHeap(int[] arr){
+        this(arr.length);
+        this.size = arr.length;
+        //所有元素入堆
+        for(int i=0; i<arr.length; i++){
+            this.data[i+1] = arr[i];
+        }
+        //保证堆满足有序的要求
+        heapify();
+    }
+
+    //从最后一个元素开始percolate down, 保证有序
+    public void heapify(){
+        for(int i=size; i>=1; i--){
+            shiftDown(i);
+        }
+    }
+
+    //返回堆顶元素
+    public int peek() throws Exception {
+        if(size==0){
+            throw new Exception("Empty heap");
+        }
+        return this.data[1];
+    }
+
+    //添加元素
+    public void offer(int val) throws Exception {
+        if(this.size==maxSize){
+            throw new Exception("Full heap, can not offer");
+        }
+        size++;
+        //添加到最后的位置
+        this.data[size] = val;
+        //然后向上与父节点交换直到合适的位置
+        shiftUp(size);
+    }
+
+    //返回堆顶元素
+    public int poll() throws Exception {
+        if(this.size==0){
+            throw new Exception("Empty heap, can not poll");
+        }
+        //要返回的元素
+        int top = this.data[1];
+        //最后一个元素放入堆顶
+        this.data[1] = this.data[size];
+        //减少了一个元素
+        size--;
+        //堆顶的元素向下与较小的子节点交换直到合适的位置
+        shiftDown(1);
+        return top;
+    }
+
+    //index所在的结点向上交换
+    public void shiftUp(int index){
+        //需要shiftup的结点
+        int cur = this.data[index];
+        //当存在父节点
+        while(index/2 >=1){
+            //当前结点值>父节点则无需交换了
+            if(cur>=data[index/2]){
+                break;
+            }
+            //父节点放入当前位置
+            this.data[index] = this.data[index/2];
+            //索引变成父节点
+            index /= 2;
+        }
+        //当前index位置为cur应该放入的位置
+        this.data[index] = cur;
+    }
+
+    //index位置向下与较小的子节点交换
+    public void shiftDown(int index){
+        int cur = this.data[index];
+        //保证有子节点
+        while(index*2<=size){
+            //左子节点索引
+            int son = index*2;
+            //如果右子节点存在且<左子节点
+            if(index*2+1<=size && this.data[son+1]<this.data[son]){
+                son += 1;
+            }
+            //当前元素小于子节点中最小的那个不需要再交换了
+            if(cur<=this.data[son]){
+                break;
+            }
+            //较小的子节点放入当前位置,
+            this.data[index] = this.data[son];
+            //索引变成较小子节点的位置
+            index = son;
+        }
+        this.data[index] = cur;
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
