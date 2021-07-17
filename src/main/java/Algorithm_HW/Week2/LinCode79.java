@@ -87,3 +87,28 @@ public class LinCode79 {
         return maxDp;
     }
 }
+
+class LintCode79_M2{
+    public static int longestCommonSubstring(String A, String B) {
+        // write your code here
+        int longest = 0;
+        for(int i = 0; i < A.length(); i++){
+            for(int j = 0; j < B.length(); j++){
+                if(A.charAt(i) == B.charAt(j)){
+                    int max = helper(A, B, i, j);
+                    longest = Math.max(longest, max);
+                }
+            }
+        }
+        return longest;
+    }
+    public static int helper(String A, String B, int i, int j){
+        int result = 0;
+        while(i < A.length() && j < B.length() && A.charAt(i) == B.charAt(j)){
+            i++;
+            j++;
+            result++;
+        }
+        return result;
+    }
+}

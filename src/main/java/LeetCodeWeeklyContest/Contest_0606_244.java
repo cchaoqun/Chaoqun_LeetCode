@@ -1,4 +1,4 @@
-package LeetCodeWeeklyContest.WC244;
+package LeetCodeWeeklyContest;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @date 2021-06-2021/6/6-10:27
  */
 
-public class Temp1 {
+public class Contest_0606_244 {
     public boolean findRotation(int[][] mat, int[][] target) {
         /*
         int m = mat.length

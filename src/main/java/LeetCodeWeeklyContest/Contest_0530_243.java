@@ -1,4 +1,4 @@
-package LeetCode_WeeklyContest.week0530;
+package LeetCodeWeeklyContest;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import java.util.*;
  * @date 2021-05-2021/5/30-10:29
  */
 
-public class Problem1 {
+public class Contest_0530_243 {
 
     @Test
     public void test(){
@@ -38,6 +38,8 @@ public class Problem1 {
         }
         return sum;
     }
+
+
 
     public String maxValue(String n, int x) {
         char[] arr = n.toCharArray();
