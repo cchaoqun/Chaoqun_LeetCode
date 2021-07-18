@@ -55,3 +55,8 @@ public class LC1450 {
 
     }
 }
+
+class LC1450_M2{
+    //TODO 差分数组
+
+}
