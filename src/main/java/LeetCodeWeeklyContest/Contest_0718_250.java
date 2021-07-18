@@ -47,6 +47,7 @@ public class Contest_0718_250 {
         }
         for(int i=1; i<m; i++){
             for(int j=0; j<n; j++){
+
                 int cur = points[i][j];
                 for(int k=0; k<n; k++){
                     points[i][j] = Math.max(points[i-1][k]+cur-Math.abs(k-j), points[i][j]);

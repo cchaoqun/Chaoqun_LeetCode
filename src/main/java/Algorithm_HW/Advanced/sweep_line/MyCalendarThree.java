@@ -5,6 +5,7 @@ import Algorithm_HW.Advanced.sweep_line.MyCalendarTwo.Item;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * @author Chaoqun Cheng
@@ -86,6 +87,27 @@ public class MyCalendarThree {
             }
         }
         // 返回结果
+        return res;
+    }
+}
+
+class MyCalendarThree_M2{
+    //TreeMap 写法
+    TreeMap<Integer, Integer> map;
+
+    public MyCalendarThree_M2() {
+        map = new TreeMap<>();
+    }
+
+    public int book(int start, int end) {
+        map.put(start, map.getOrDefault(start, 0)+1);
+        map.put(end, map.getOrDefault(end, 0)-1);
+        int cur = 0;
+        int res = 0;
+        for(Integer key : map.keySet()){
+            cur += map.get(key);
+            res = Math.max(cur, res);
+        }
         return res;
     }
 }

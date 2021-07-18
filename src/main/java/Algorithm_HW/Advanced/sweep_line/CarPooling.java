@@ -54,3 +54,30 @@ public class CarPooling {
         return res;
     }
 }
+class CarPooling_M2{
+    public boolean carPooling(int[][] trips, int capacity) {
+        if(trips==null || trips.length==0){
+            return true;
+        }
+        int max = 0;
+        for(int[] trip : trips){
+            max = Math.max(trip[2], max);
+        }
+        int[] res = new int[max+1];
+        //差分数组
+        for(int[] trip:trips){
+            //上车
+            res[trip[1]] += trip[0];
+            //下车
+            res[trip[2]] -= trip[0];
+        }
+        for(int i=1; i<=max; i++){
+            //差分数组的prefix sum就是当前位置的车上总人数
+            res[i] += res[i-1];
+            if(res[i]>capacity){
+                return false;
+            }
+        }
+        return true;
+    }
+}
