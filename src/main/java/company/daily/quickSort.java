@@ -13,7 +13,6 @@ public class quickSort {
         quickSort(nums, 0, nums.length-1);
         return nums;
     }
-
     private void quickSort(int[] nums, int l, int r){
         if(l>=r){
             return;
@@ -22,8 +21,6 @@ public class quickSort {
         quickSort(nums, l, pivot-1);
         quickSort(nums, pivot+1, r);
     }
-
-
     private int partition(int[] nums, int l, int r){
         int pivot = rand.nextInt(r-l+1)+l;
         int cur = nums[pivot];
@@ -38,11 +35,9 @@ public class quickSort {
         swap(nums, l, index);
         return index;
     }
-
     private void swap(int[] nums, int i, int j){
         int temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
     }
-
 }
