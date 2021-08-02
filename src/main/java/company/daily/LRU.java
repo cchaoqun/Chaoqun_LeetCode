@@ -1,6 +1,7 @@
 package company.daily;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -8,6 +9,31 @@ import java.util.Map;
  * @date 2021-07-2021/7/15-14:07
  */
 
+/**
+ DLinkedNode 双向链表 代表使用的过的项目
+ head tail
+ HashMap<Integer, Node> O(1)获取到key对应的node
+ size    当前链表中节点得数量
+ capacity    当前的最大容量
+ get
+ 通过map得到对应的node
+ 将这个node放到链表的头
+ put
+ 如果这个点存在,
+ 修改这个点的值
+ 将这个点放到双向链表的头
+ 如果这个点不存在
+ 创建这个点
+ check这个链表是否达到上限
+ 达到, 需要删除链表尾的结点
+ 放入双向链表头
+ 删除链表尾
+ tail移除
+ 移到链表头
+ 删除这个结点
+ 插入到链表头
+ 插入到链表头
+ */
 public class LRU {
     //双向链表
     class DLinkedNode{
@@ -15,7 +41,7 @@ public class LRU {
         int value;
         DLinkedNode prev;
         DLinkedNode next;
-        public DLinkedNode(){};
+        public DLinkedNode(){}
         public DLinkedNode(int _key, int _value){
             key = _key;
             value = _value;
@@ -108,3 +134,37 @@ public class LRU {
         return res;
     }
 }
+
+class LRUCache2{
+    int capacity;
+    Map<Integer, Integer> map;
+
+    public LRUCache2(int capacity) {
+        this.capacity = capacity;
+        map = new LinkedHashMap<>();
+    }
+
+    public int get(int key) {
+        if (!map.containsKey(key)) {
+            return -1;
+        }
+        // 先删除旧的位置，再放入新位置
+        Integer value = map.remove(key);
+        map.put(key, value);
+        return value;
+    }
+
+    public void put(int key, int value) {
+        if (map.containsKey(key)) {
+            map.remove(key);
+            map.put(key, value);
+            return;
+        }
+        map.put(key, value);
+        // 超出capacity，删除最久没用的,利用迭代器删除第一个
+        if (map.size() > capacity) {
+            map.remove(map.entrySet().iterator().next().getKey());
+        }
+    }
+}
+
